@@ -1,0 +1,24 @@
+{
+  "name": "trabalhoconclusaoprogramacao",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunosbo/TrabalhoConclusaoProgramacao.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/brunosbo/TrabalhoConclusaoProgramacao/issues"
+  },
+  "homepage": "https://github.com/brunosbo/TrabalhoConclusaoProgramacao#readme",
+  "dependencies": {
+    "mocha": "^11.7.5"
+  }
+}
