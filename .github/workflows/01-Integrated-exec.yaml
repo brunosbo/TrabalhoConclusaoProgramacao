@@ -1,0 +1,114 @@
+# CI de Nível 01 - Pipeline manual,integrada ao Build do codigo e agendada
+
+# nome da pipeline
+name: "N1 - Execução Integrada"
+
+# gatilhos / triggers - regras de disparo
+# gatilho manual = workflow_dispatch
+
+on:
+    workflow_dispatch:   
+    push: 
+      branches:
+        - master
+    schedule:
+    # cronograma de execucao
+    # 1- minuto, 2- hora , 3- dia do mes, 4- mes, 5- dia da semana
+    - cron: '35 9 * * 1' # runs at 09:35, only on Saturday
+#tarefas dentro da pipeline = jobs
+
+jobs:
+    #nome do job
+    inspecao:
+        # maquina onde o job vai rodar
+        runs-on: ubuntu-latest
+
+        # passos do job
+        steps:
+            # clone do projeto
+            - uses: actions/checkout@v4
+
+            # instalção do node
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: latest
+
+            # instalação do Yarn
+            - name: Instalando Yarn
+              run: npm install -g yarn
+            
+            # instalação das dependências
+            - name: Instalando dependências
+              run: yarn
+
+            - name: Inspecao do codigo
+              run: yarn lint
+            
+            # instalação dos Browsers do Playwright
+            - name: Instalando Browsers do Playwright
+              run: yarn playwright install
+            
+            # executar os testes e2e
+            - name: Executando testes e2e
+              run: yarn run e2e
+    
+    unidade:
+      runs-on: ubuntu-latest
+      needs: [inspecao]
+
+      steps:
+
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: latest
+                              
+            - name: Instalando Yarn
+              run: npm install -g yarn
+
+            - name: Instalando dependências
+              run: yarn
+
+            - name: Executando testes unitarios
+              run: yarn run test
+
+
+    e2e-tests:
+      runs-on: ubuntu-latest
+      needs: [inspecao]
+
+      steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: latest
+                              
+            - name: Instalando Yarn
+              run: npm install -g yarn
+
+            - name: Instalando dependências
+              run: yarn
+
+            - name: Instalando Browsers do Playwright
+              run: yarn playwright install
+            
+            - name: Executando testes e2e
+              run: yarn run e2e
+
+            - name: Salvando relatorios de testes
+              uses: actions/upload-artifact@v4
+              if: ${{ always() }}
+              with:
+                path:     ./playwright-report
+                name: Relatorios de testes e2e
+            
+    
+    deploy:
+      runs-on: ubuntu-latest
+      needs: [unidade, e2e-tests]
+
+      steps: 
+      - name: Simulacao do deploy
+        run: echo 'Deploy sendo realizado...' 
