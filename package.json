@@ -20,5 +20,10 @@
   "homepage": "https://github.com/brunosbo/TrabalhoConclusaoProgramacao#readme",
   "dependencies": {
     "mocha": "^11.7.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.5.0",
+    "globals": "^17.6.0"
   }
 }
