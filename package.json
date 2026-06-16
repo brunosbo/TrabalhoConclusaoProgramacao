@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+<<<<<<< HEAD
 "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "test": "mocha test/**/*.js --reporter mochawesome --reporter-options reportDir=mochawesome-report"
+=======
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
+>>>>>>> eb9dae242192dffc21df2aa8f575e0c0b709d842
   },
   "repository": {
     "type": "git",
