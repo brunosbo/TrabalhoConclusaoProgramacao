@@ -1,0 +1,48 @@
+# CI de Nível 01 - Pipeline manual,integrada ao Build do codigo e agendada
+
+# nome da pipeline
+name: "N2 - Execução Integrada - Versao 2"
+
+# gatilhos / triggers - regras de disparo
+# gatilho manual = workflow_dispatch
+
+on:
+    workflow_dispatch:   
+    push: 
+      branches:
+        - master
+    schedule:
+    # cronograma de execucao
+    # 1- minuto, 2- hora , 3- dia do mes, 4- mes, 5- dia da semana
+    - cron: '*/30 * * * *' # runs at 09:35, only on Saturday
+#tarefas dentro da pipeline = jobs
+
+jobs:
+    #nome do job
+    e2e-tests:
+      runs-on: ubuntu-latest
+
+      steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: latest
+                              
+            - name: Instalando Yarn
+              run: npm install -g yarn
+
+            - name: Instalando dependências
+              run: yarn
+
+            # Comando que roda o mocha, gera o relatório e salva na pasta
+            - name: Executando testes unitarios
+              run: yarn test
+
+            # Grava a pasta especificada como um artefato do GitHub
+            - name: Salvando relatorios de testes do Mocha
+              uses: actions/upload-artifact@v4
+              if: ${{ always() }} # Garante que o relatório seja salvo mesmo se algum teste falhar
+              with:
+                name: Relatorio-Testes-Mocha
+                path: ./mochawesome-report
