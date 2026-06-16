@@ -7,7 +7,7 @@
 "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
-    "test": "mocha test/**/*.js --reporter node_modules/mochawesome --reporter-options reportDir=mochawesome-report"
+    "test": "mocha test/**/*.js --import=mochawesome --reporter=mochawesome --reporter-options reportDir=mochawesome-report"
   },
   "repository": {
     "type": "git",
