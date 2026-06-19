@@ -14,7 +14,7 @@ on:
     schedule:
     # cronograma de execucao
     # 1- minuto, 2- hora , 3- dia do mes, 4- mes, 5- dia da semana
-    - cron: '*/30 * * * *' # runs at 09:35, only on Saturday
+    #- cron: '*/30 * * * *' # runs at 09:35, only on Saturday
 #tarefas dentro da pipeline = jobs
 
 jobs:
